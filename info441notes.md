@@ -3,6 +3,7 @@
 - [Introduction to Javascript](#introduction-to-javascript)
 - [Javascript Functions](#javascript-functions)
 - [The Document Object Model (DOM)](#the-document-object-model)
+- [Event-Driven Application Architecture](#event-driven-application-architecture)
 
 
 # Essential HTML 
@@ -298,3 +299,35 @@ A reference to the element with the **style class**
     }, {once: true});
 ```
 
+# Event-Driven Application Architecture
+
+### State
+-  At any moment, this state determines where the program is at and what it will do next.
+- This state is stored in the program's variables and function parameters.
+- In a browser-based JavaScript application, the program's state is commonly held in one global (or top-level scope) object that has one property for each state value you need to track.
+
+### Event-Driven Programming
+- Interactive applications, on the other hand, allow the user to modify the program's state while it's running via various input methods (keyboard, mouse, gesture, specialized controller, voice, etc.). 
+- These programs are typically written in an event-driven programming style, where the program has two distinct phases:
+    - The **initialization phase**, during which the program initializes its state and adds various event listener functions. These event listener functions will be invoked whenever the requested event occurs (e.g., mouse click, key press, page scroll, timer, etc.)
+    - The **event phase**, during which the program waits for those events to occur. Each time an event occurs, the corresponding event listener function is invoked. That function in turn modifies the program's state, and updates the screen to match.
+
+### Rendering
+
+- To make the state visible on screen, we need to create some HTML elements, and write a function that synchronizes those elements' attributes with the current application state values. 
+```Javascript
+    //select the elements once at startup
+    let circle = document.querySelector("svg circle");
+    let rect = document.querySelector("svg rect");
+
+    //render will render the state to the page elements
+    function render(state) {
+        //adjust element attriutes to match current state
+        circle.setAttribute("cx", state.ball.x);
+        circle.setAttribute("cy", state.ball.y);
+        rect.setAttribute("y", state.paddle.y);
+    }
+
+    // also you can render the initial state
+    render(state);
+```
